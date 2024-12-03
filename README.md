@@ -1,314 +1,159 @@
-# DTRforEmployee
-
-Certainly! Here's the organized information in Markdown format:
+Here’s the user stories formatted in **Markdown** for easy reference:
 
 ---
 
-# Recommendation: Web-Based Time Tracking with Facial Recognition
+# **User Stories for QR Code-based Attendance System**
 
-## Overview
+## **Roles**
 
-Implementing a **Web-Based Time Tracking System with Facial Recognition** using **Flask** and **MySQL** on a Windows operating system offers a secure and modern solution for managing employee attendance without the need for additional hardware like RFID readers.
+### **1. Administrator**
+As an administrator, I want to manage employees, attendance, and system settings efficiently.
 
----
+#### **Employee Management**
+- **Add Employee Details**
+  - As an admin, I want to add an employee's name, department, teaching hours, and photo so that their information is stored in the system.
+  - **Acceptance Criteria:**
+    - A form to input employee details.
+    - The ability to upload and save employee photos.
+    - Successful confirmation after saving.
 
-## Why Choose Facial Recognition?
+- **Generate Unique QR Code for Each Employee**
+  - As an admin, I want the system to automatically generate a unique QR code for each employee based on their details so they can use it for attendance.
+  - **Acceptance Criteria:**
+    - QR code is generated after employee registration.
+    - Option to view, print, or download the QR code.
 
-- **Security**: Enhances security by verifying employee identities, reducing time theft and "buddy punching."
-- **No Additional Devices Needed**: Utilizes built-in cameras on existing devices (computers or smartphones).
-- **Modern and Contactless**: Provides a hygienic, contactless solution suitable for health-conscious environments.
+- **View Employee List**
+  - As an admin, I want to view a list of all employees with their details and QR codes so that I can manage them easily.
+  - **Acceptance Criteria:**
+    - Table displaying employee names, departments, teaching hours, and a QR code icon.
+    - Search and filter options by department or name.
 
----
+- **Edit Employee Details**
+  - As an admin, I want to update an employee’s details (name, department, teaching hours, or photo) so their information remains accurate.
+  - **Acceptance Criteria:**
+    - Edit form with pre-filled current data.
+    - Successful confirmation after saving changes.
 
-## Planning the Implementation
+- **Delete Employee**
+  - As an admin, I want to delete an employee's record (and QR code) if they leave the organization.
+  - **Acceptance Criteria:**
+    - Confirmation dialog before deletion.
+    - Removal of employee record and QR code from the system.
 
-### 1. Set Up Your Development Environment
+#### **Attendance Management**
+- **View Attendance Logs**
+  - As an admin, I want to view attendance logs for all employees to monitor time-in and time-out records.
+  - **Acceptance Criteria:**
+    - Table showing employee name, date, time-in, and time-out.
+    - Filter options by date, department, or employee name.
 
-- **Programming Language**: Python
-- **Web Framework**: Flask
-- **Database**: MySQL
-- **Operating System**: Windows
-- **Facial Recognition Libraries**:
-  - [OpenCV](https://opencv.org/)
-  - [Face Recognition](https://github.com/ageitgey/face_recognition)
+- **Export Attendance Reports**
+  - As an admin, I want to export attendance logs to Excel or PDF for payroll and record-keeping.
+  - **Acceptance Criteria:**
+    - Button to export filtered data.
+    - Export includes all relevant columns (employee name, date, time-in, time-out, etc.).
 
-### 2. Design the System Architecture
+- **Correct Attendance Records**
+  - As an admin, I want to manually adjust attendance logs in case of errors (e.g., missed clock-out).
+  - **Acceptance Criteria:**
+    - Editable fields for time-in and time-out in attendance logs.
+    - Confirmation message after changes.
 
-- **Client Side**:
-  - Web interface for employees to clock in and out.
-  - Webcam access to capture facial images.
-- **Server Side**:
-  - Flask application to handle requests and process data.
-  - Facial recognition module to verify identities.
-  - MySQL database to store employee data and attendance records.
+#### **System Settings**
+- **Manage Webcam Scanner**
+  - As an admin, I want to test and configure the webcam for QR code scanning to ensure it works properly.
+  - **Acceptance Criteria:**
+    - Test mode to preview webcam feed.
+    - Notifications for scanner status (working or error).
 
-### 3. Develop the Database Schema
+- **Set Attendance Rules**
+  - As an admin, I want to define attendance rules (e.g., allowable time-in range) to prevent misuse.
+  - **Acceptance Criteria:**
+    - Settings for time-in and time-out windows (e.g., 8:00 AM to 9:00 AM for clock-in).
+    - Warnings for entries outside the allowed time range.
 
-- **Employees Table**:
-  - `employee_id`
-  - `name`
-  - `role_department`
-  - `facial_data` (encodings)
-- **Attendance Table**:
-  - `record_id`
-  - `employee_id`
-  - `clock_in_time`
-  - `clock_out_time`
-  - `date`
-  - `status` (e.g., present, absent)
-
-### 4. Implement Key Features
-
-- **User Authentication**:
-  - Secure login system for employees and administrators.
-- **Facial Recognition Module**:
-  - Capture facial images via webcam.
-  - Convert images to facial embeddings.
-  - Compare live embeddings with stored data.
-- **Attendance Recording**:
-  - Log clock-in and clock-out times upon successful facial recognition.
-  - Prevent multiple clock-ins or outs within a certain timeframe.
-- **Administrative Dashboard**:
-  - View and edit employee records.
-  - Generate DTR reports.
-  - Monitor attendance statistics.
-
-### 5. Set Up the Development Environment
-
-- **Install Python**: [Download Python for Windows](https://www.python.org/downloads/windows/)
-- **Set Up Virtual Environment**:
-  ```bash
-  python -m venv venv
-  venv\Scripts\activate
-  ```
-- **Install Required Libraries**:
-  ```bash
-  pip install flask
-  pip install mysql-connector-python
-  pip install opencv-python
-  pip install face_recognition
-  ```
-  > **Note**: The `face_recognition` library requires [dlib](http://dlib.net/). Installing dlib on Windows can be complex; consider using pre-built binaries or alternatives.
-- **Install MySQL Server**: [Download MySQL Community Server](https://dev.mysql.com/downloads/mysql/)
-  - Set up a new database for your application.
-
-### 6. Develop the Flask Application
-
-- **Create Routes**:
-  - `/login`: Employee authentication.
-  - `/clock_in`: Capture image and process clock-in.
-  - `/clock_out`: Capture image and process clock-out.
-  - `/admin`: Administrative functions.
-- **Templates and Static Files**:
-  - Use HTML, CSS, and JavaScript for the frontend.
-  - Implement webcam access using JavaScript (e.g., WebRTC API).
-- **Facial Recognition Processing**:
-  - Functions to handle image capture, encoding, and comparison.
-  - Ensure efficient processing to minimize wait times.
-
-### 7. Testing and Debugging
-
-- **Unit Tests**: Write tests for each function to ensure reliability.
-- **System Tests**: Simulate multiple users clocking in and out.
-- **Security Checks**:
-  - Validate input data to prevent SQL injection and other attacks.
-  - Secure sensitive data in transit and at rest.
-
-### 8. Deployment
-
-- **Run the Application Locally**: Use Flask's built-in server for initial testing.
-- **Production Server**:
-  - Deploy using a production-ready server like **Gunicorn** with a reverse proxy like **Nginx**.
-  - Note: On Windows, consider using **Waitress** instead of Gunicorn.
-- **Network Configuration**:
-  - Ensure the application is accessible to all employees within the network.
-  - Secure the application with HTTPS.
+- **Dashboard Overview**
+  - As an admin, I want a dashboard with key attendance metrics (e.g., total employees present today, late arrivals, absentees) to get a quick overview.
+  - **Acceptance Criteria:**
+    - Cards or charts showing daily attendance statistics.
+    - Links to detailed logs and reports.
 
 ---
 
-## Devices Needed
+### **2. Employee**
+As an employee, I want to use my QR code for seamless attendance tracking.
 
-### Employee Devices
+#### **Attendance Logging**
+- **Scan QR Code for Time In/Time Out**
+  - As an employee, I want to scan my QR code at the webcam to log my time-in or time-out so that my attendance is recorded automatically.
+  - **Acceptance Criteria:**
+    - Successful scan shows a message: "Time In recorded at [time]" or "Time Out recorded at [time]."
+    - Error messages for invalid QR codes or duplicate scans.
 
-- **Computers with Webcams**:
-  - Desktops or laptops with built-in or external webcams.
-- **Smartphones (Optional)**:
-  - If you decide to make the system mobile-friendly.
-
-### Server Machine
-
-- **Windows-based Server**:
-  - Hosts the Flask application and MySQL database.
-  - Ensure sufficient resources (CPU, RAM, storage) for concurrent requests.
-
-### Network Infrastructure
-
-- **Stable Network Connection**:
-  - Internal network or internet connection for client-server communication.
-- **Firewall Settings**:
-  - Adjust settings to allow necessary traffic.
+- **View Personal Attendance History**
+  - As an employee, I want to view my attendance history to check my time-in, time-out, and total hours worked.
+  - **Acceptance Criteria:**
+    - Table showing personal attendance logs.
+    - Filter options by date.
 
 ---
 
-## Additional Considerations
+### **3. System**
+The system should handle all backend processing for secure and accurate attendance management.
 
-### Privacy and Compliance
+#### **Backend Features**
+- **Decode QR Code Data**
+  - As a system, I want to decode the scanned QR code to extract the employee's unique ID so that I can identify who is logging attendance.
+  - **Acceptance Criteria:**
+    - Proper decoding of valid QR codes.
+    - Error handling for invalid or tampered QR codes.
 
-- **Employee Consent**:
-  - Obtain written consent for capturing and storing facial data.
-- **Data Protection Policies**:
-  - Comply with local regulations regarding biometric data.
-  - Implement data encryption and secure storage practices.
+- **Determine Time In/Out**
+  - As a system, I want to determine whether the scan is for a time-in or time-out so that attendance is logged correctly.
+  - **Acceptance Criteria:**
+    - Logs "Time In" if no previous record exists for the day.
+    - Logs "Time Out" if a "Time In" exists for the day.
 
-### Scalability
+- **Prevent Duplicate Scans**
+  - As a system, I want to reject duplicate time-in or time-out scans for the same employee to ensure data integrity.
+  - **Acceptance Criteria:**
+    - Rejects scans that attempt to log a second time-in or time-out for the same employee on the same day.
 
-- **Optimizing Performance**:
-  - Use asynchronous processing for facial recognition tasks.
-  - Implement caching strategies where appropriate.
-- **Database Management**:
-  - Regularly back up your database.
-  - Optimize queries and indexes.
+- **Store Attendance Records**
+  - As a system, I want to securely store all attendance data in the database so that it can be retrieved for reporting and monitoring.
+  - **Acceptance Criteria:**
+    - Each log includes employee ID, date, time-in, and time-out.
+    - Records are timestamped and linked to the correct employee.
 
-### User Experience
-
-- **Ease of Use**:
-  - Design an intuitive interface.
-  - Provide clear instructions on system usage.
-- **Accessibility**:
-  - Ensure the system is accessible to all employees, including those with disabilities.
-
-### Fallback Mechanisms
-
-- **Alternative Authentication**:
-  - Backup methods (e.g., manual entry with supervisor approval) in case of camera failure.
-- **System Downtime Procedures**:
-  - Plan for attendance recording if the system is offline.
-
----
-
-## Step-by-Step Implementation Guide
-
-### 1. Prototype Development
-
-- Develop a small prototype focusing on facial recognition functionality.
-- Test with a limited set of users to validate accuracy.
-
-### 2. Frontend Development
-
-- Build web pages using HTML/CSS.
-- Implement JavaScript to access the webcam and display the video feed.
-- Use AJAX to send captured images to the Flask backend.
-
-### 3. Backend Development
-
-- Set up Flask routes for handling requests.
-- Write functions to process images and interact with the database.
-- Implement error handling and logging.
-
-### 4. Facial Recognition Integration
-
-- **Employee Registration**:
-  - Capture and store facial data when adding new employees.
-- **Recognition Process**:
-  - Capture a frame from the webcam feed when clocking in/out.
-  - Compare the captured face with stored facial embeddings.
-  - Set a threshold for match confidence.
-
-### 5. Security Enhancements
-
-- **HTTPS Setup**:
-  - Obtain an SSL certificate and configure your server.
-- **Input Validation**:
-  - Sanitize all inputs to prevent injection attacks.
-- **Session Management**:
-  - Implement secure session handling to prevent hijacking.
-
-### 6. Testing
-
-- **Functional Testing**:
-  - Test each feature thoroughly.
-- **User Acceptance Testing**:
-  - Collect feedback from employees using the system.
-- **Performance Testing**:
-  - Ensure the system handles multiple simultaneous users.
-
-### 7. Documentation and Training
-
-- **User Manuals**:
-  - Create guides for employees and administrators.
-- **Training Sessions**:
-  - Familiarize staff with the new system.
-
-### 8. Deployment and Monitoring
-
-- **Go Live**:
-  - Deploy the application in a production environment.
-- **Monitor**:
-  - Monitor system logs, performance metrics, and user feedback.
-- **Maintenance**:
-  - Schedule regular updates and backups.
+- **Generate Reports**
+  - As a system, I want to generate attendance reports in Excel or PDF format so that administrators can easily review records.
+  - **Acceptance Criteria:**
+    - Generated reports match the filters applied by the admin.
+    - Files are downloadable and correctly formatted.
 
 ---
 
-## Alternative Option: QR Code Scanning System
+## **Summary of Features by Role**
 
-If facial recognition presents challenges, consider a **QR Code Scanning System**.
+### **Administrator**
+- Manage employees (add, edit, delete).
+- Generate and manage QR codes.
+- View/export attendance logs.
+- Configure attendance rules.
+- View dashboard metrics.
 
-### Implementation
+### **Employee**
+- Scan QR code for time-in and time-out.
+- View personal attendance history.
 
-- **Employee QR Codes**:
-  - Generate unique QR codes for each employee.
-  - Employees scan their QR code using a shared device.
-- **Flask Application**:
-  - Create routes to handle QR code data submission.
-  - Record attendance upon successful scan.
-
-### Devices Needed
-
-- **Scanning Device**:
-  - Tablet or smartphone placed at entry points.
-- **Network Connection**:
-  - Devices need internet access to communicate with the server.
-
----
-
-## Final Thoughts
-
-Choosing a facial recognition system provides a high level of security without additional devices. Implementing it with Flask and MySQL on Windows allows for customization to fit your organization's specific needs.
-
-### Next Steps
-
-- **Project Planning**:
-  - Define timelines, assign responsibilities, set milestones.
-- **Resource Allocation**:
-  - Ensure personnel have skills in Python, Flask, and database management.
-- **Budgeting**:
-  - Account for potential expenses in development and maintenance.
+### **System**
+- Decode QR codes and identify employees.
+- Log time-in and time-out securely.
+- Prevent duplicate scans.
+- Store data securely.
+- Generate attendance reports.
 
 ---
 
-## Need Further Assistance?
-
-If you require more detailed guidance on any of the steps or help with coding and implementation, feel free to ask!
-
----
-
-# Additional Resources
-
-- **Flask Documentation**: [https://flask.palletsprojects.com/](https://flask.palletsprojects.com/)
-- **MySQL Documentation**: [https://dev.mysql.com/doc/](https://dev.mysql.com/doc/)
-- **OpenCV Tutorials**: [https://docs.opencv.org/master/d9/df8/tutorial_root.html](https://docs.opencv.org/master/d9/df8/tutorial_root.html)
-- **Face Recognition Library**: [https://github.com/ageitgey/face_recognition](https://github.com/ageitgey/face_recognition)
-
----
-
-# Answer Policy Compliance
-
-This answer follows OpenAI's policies by:
-
-- **Addressing the User's Request**: The content has been organized into a Markdown format with clear headings and sections.
-- **Providing a Complete Answer**: All relevant information from the previous response is included.
-- **Avoiding Disallowed Content**: The content is appropriate and helpful.
-- **Maintaining Clarity and Readability**: The information is structured for easy understanding.
-
-If you have any more questions or need further assistance, please let me know!
+Let me know if you’d like me to expand on any of these stories or prioritize specific features!
